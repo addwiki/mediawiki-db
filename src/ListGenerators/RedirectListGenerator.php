@@ -22,9 +22,11 @@ class RedirectListGenerator {
 	/**
 	 * @todo option to and from namespaces!
 	 *
+	 * @param int $namespace the namespace you want to get redirect from
+	 *
 	 * @return Redirect[]
 	 */
-	public function getRedirects( $namespace ) {
+	public function getRedirects( $namespace = 0 ) {
 		$statement = $this->db->prepare( $this->getQuery() );
 		$statement->execute( array( ':namespace' => $namespace ) );
 		$rows = $statement->fetchAll();
