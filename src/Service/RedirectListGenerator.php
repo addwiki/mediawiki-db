@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediawiki\Db\ListGenerators;
+namespace Mediawiki\Db\Service;
 
 use Mediawiki\Db\DataObjects\Redirect;
 use PDO;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediawiki\Db\ListGenerators;
+namespace Mediawiki\Db\Service;
 
 use PDO;
 
@@ -51,4 +51,5 @@ WHERE log_type = 'delete'
 AND log_action = 'delete'
 AND log_namespace = :namespace";
 	}
+
 }
