@@ -4,7 +4,7 @@ namespace Mediawiki\Db\Service;
 
 use PDO;
 
-class PageFileExtensionListGenerator {
+class PageFileExtensionListGetter {
 
 	/**
 	 * @var PDO

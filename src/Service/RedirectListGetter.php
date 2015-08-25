@@ -5,7 +5,7 @@ namespace Mediawiki\Db\Service;
 use Mediawiki\Db\DataObjects\Redirect;
 use PDO;
 
-class RedirectListGenerator {
+class RedirectListGetter {
 
 	/**
 	 * @var PDO
