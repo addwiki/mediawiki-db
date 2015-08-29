@@ -26,7 +26,7 @@ class ProbablyDeletedTitleListGetter {
 	 *
 	 * @return string[]
 	 */
-	public function getRedirects( $namespace = 0 ) {
+	public function getTitleStrings( $namespace = 0 ) {
 		$statement = $this->db->prepare( $this->getQuery() );
 		$statement->execute( array( ':namespace' => $namespace ) );
 		$rows = $statement->fetchAll();
