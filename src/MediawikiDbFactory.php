@@ -3,7 +3,7 @@
 namespace Mediawiki\Db;
 
 use Mediawiki\Db\Service\PageFileExtensionListGetter;
-use Mediawiki\Db\Service\ProbablyDeletedTitleListGetter;
+use Mediawiki\Db\Service\DeletedLogListGetter;
 use Mediawiki\Db\Service\RedirectListGetter;
 use PDO;
 
@@ -20,7 +20,7 @@ class MediawikiDbFactory {
 	}
 
 	public function newProbablyDeletedTitleListGetter() {
-		return new ProbablyDeletedTitleListGetter( $this->db );
+		return new DeletedLogListGetter( $this->db );
 	}
 
 	public function newRedirectListGetter() {
