@@ -30,7 +30,7 @@ class DeletedLogListGetter {
 	 *
 	 * @return LogList
 	 */
-	public function getTitleStrings( $namespace = 0 ) {
+	public function getLogList( $namespace = 0 ) {
 		$query = $this->db->from( 'logging' )
 			->select( 'log_id' )
 			->select( 'log_type' )
