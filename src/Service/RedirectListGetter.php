@@ -2,7 +2,8 @@
 
 namespace Mediawiki\Db\Service;
 
-use Mediawiki\Db\DataObjects\Redirect;
+use Mediawiki\DataModel\Redirect;
+use Mediawiki\DataModel\Title;
 use PDO;
 
 class RedirectListGetter {
@@ -33,7 +34,10 @@ class RedirectListGetter {
 
 		$redirects = array();
 		foreach( $rows as $row ) {
-			$redirects[] = new Redirect( $row['title'], $row['rd_title'] );
+			$redirects[] = new Redirect(
+				new Title( $row['title'], $row['namespace'] ),
+				new Title( $row['rd_title'], $row['rd_namespace'] )
+			);
 		}
 
 		return $redirects;
@@ -45,7 +49,8 @@ class RedirectListGetter {
 	 * @return string
 	 */
 	private function getQuery() {
-		return "SELECT p1.page_title AS title, rd_title
+		return "SELECT p1.page_title AS title, rd_title,
+p1.page_namespace as namespace, rd_namespace
 FROM page as p1
 LEFT JOIN redirect ON ((rd_from=p1.page_id))
 LEFT JOIN page as p2 ON ((p2.page_namespace=rd_namespace) AND (p2.page_title=rd_title))
