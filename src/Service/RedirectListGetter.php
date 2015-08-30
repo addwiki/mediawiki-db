@@ -35,8 +35,8 @@ class RedirectListGetter {
 		$redirects = array();
 		foreach( $rows as $row ) {
 			$redirects[] = new Redirect(
-				new Title( $row['title'], $row['namespace'] ),
-				new Title( $row['rd_title'], $row['rd_namespace'] )
+				new Title( $row['title'], intval( $row['namespace'] ) ),
+				new Title( $row['rd_title'], intval( $row['rd_namespace'] ) )
 			);
 		}
 
