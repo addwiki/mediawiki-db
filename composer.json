@@ -15,6 +15,11 @@
 		}
 	},
 	"require": {
-		"addwiki/mediawiki-datamodel": "dev-master as 0.6"
+		"addwiki/mediawiki-datamodel": "~0.6@dev"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "0.1.x-dev"
+		}
 	}
 }
