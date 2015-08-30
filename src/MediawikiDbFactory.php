@@ -15,14 +15,31 @@ class MediawikiDbFactory {
 		$this->db = $db;
 	}
 
+	/**
+	 * @since 0.1
+	 *
+	 * @param string $fileExtension
+	 *
+	 * @return PageFileExtensionListGetter
+	 */
 	public function newPageFileExtensionListGetter( $fileExtension ) {
 		return new PageFileExtensionListGetter( $this->db, $fileExtension );
 	}
 
-	public function newProbablyDeletedTitleListGetter() {
+	/**
+	 * @since 0.1
+	 *
+	 * @return DeletedLogListGetter
+	 */
+	public function newDeletedLogListGetter() {
 		return new DeletedLogListGetter( $this->db );
 	}
 
+	/**
+	 * @since 0.1
+	 * 
+	 * @return RedirectListGetter
+	 */
 	public function newRedirectListGetter() {
 		return new RedirectListGetter( $this->db );
 	}
