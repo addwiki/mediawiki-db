@@ -4,6 +4,8 @@ namespace Mediawiki\Db\Service;
 
 use Mediawiki\DataModel\Log;
 use Mediawiki\DataModel\LogList;
+use Mediawiki\DataModel\PageIdentifier;
+use Mediawiki\DataModel\Title;
 use PDO;
 
 class DeletedLogListGetter {
@@ -40,7 +42,10 @@ class DeletedLogListGetter {
 				$row['log_action'],
 				$row['log_timestamp'],
 				$row['log_user'],
-				$row['log_page'],
+				new PageIdentifier(
+					new Title( $row['log_title'], $row['log_namespace'] ),
+					$row['log_page']
+				),
 				$row['log_comment'],
 				$row['log_params']
 			) );
@@ -55,7 +60,7 @@ class DeletedLogListGetter {
 	 * @return string
 	 */
 	private function getQuery() {
-		return "SELECT log_title,log_comment
+		return "SELECT log_id,log_type,log_action,log_timestamp,log_user,log_namespace,log_title,log_comment,log_page,log_comment,log_params
 FROM logging
 WHERE log_type = 'delete'
 AND log_action = 'delete'
