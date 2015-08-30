@@ -15,7 +15,8 @@
 		}
 	},
 	"require": {
-		"addwiki/mediawiki-datamodel": "~0.6@dev"
+		"addwiki/mediawiki-datamodel": "~0.6@dev",
+		"lichtner/fluentpdo": "1.0.0"
 	},
 	"extra": {
 		"branch-alias": {

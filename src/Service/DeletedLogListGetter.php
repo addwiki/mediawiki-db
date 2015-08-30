@@ -2,6 +2,7 @@
 
 namespace Mediawiki\Db\Service;
 
+use FluentPDO;
 use Mediawiki\DataModel\Log;
 use Mediawiki\DataModel\LogList;
 use Mediawiki\DataModel\PageIdentifier;
@@ -11,7 +12,7 @@ use PDO;
 class DeletedLogListGetter {
 
 	/**
-	 * @var PDO
+	 * @var FluentPDO
 	 */
 	protected $db;
 
@@ -19,7 +20,7 @@ class DeletedLogListGetter {
 	 * @param PDO $db
 	 */
 	public function __construct( PDO $db ) {
-		$this->db = $db;
+		$this->db = new FluentPDO( $db );
 	}
 
 	/**
@@ -30,21 +31,34 @@ class DeletedLogListGetter {
 	 * @return LogList
 	 */
 	public function getTitleStrings( $namespace = 0 ) {
-		$statement = $this->db->prepare( $this->getQuery() );
-		$statement->execute( array( ':namespace' => $namespace ) );
-		$rows = $statement->fetchAll();
+		$query = $this->db->from( 'logging' )
+			->select( 'log_id' )
+			->select( 'log_type' )
+			->select( 'log_action' )
+			->select( 'log_timestamp' )
+			->select( 'log_user' )
+			->select( 'log_namespace' )
+			->select( 'log_title' )
+			->select( 'log_comment' )
+			->select( 'log_page' )
+			->select( 'log_params' )
+			->where( 'log_type = \'delete\'' )
+			->where( 'log_action = \'delete\'' )
+			->where( 'log_namespace = ' . $this->db->getPdo()->quote( $namespace ) );
+
+		$rows = $query->fetchAll();
 
 		$logList = new LogList();
 		foreach( $rows as $row ) {
 			$logList->addLog( new Log(
-				$row['log_id'],
+				intval( $row['log_id'] ),
 				$row['log_type'],
 				$row['log_action'],
 				$row['log_timestamp'],
 				$row['log_user'],
 				new PageIdentifier(
-					new Title( $row['log_title'], $row['log_namespace'] ),
-					$row['log_page']
+					new Title( $row['log_title'], intval( $row['log_namespace'] ) ),
+					intval( $row['log_page'] )
 				),
 				$row['log_comment'],
 				$row['log_params']
@@ -52,19 +66,6 @@ class DeletedLogListGetter {
 		}
 
 		return $logList;
-	}
-
-	/**
-	 * @todo we probably want to build the queries rather than having then so hardcoded....
-	 *
-	 * @return string
-	 */
-	private function getQuery() {
-		return "SELECT log_id,log_type,log_action,log_timestamp,log_user,log_namespace,log_title,log_comment,log_page,log_comment,log_params
-FROM logging
-WHERE log_type = 'delete'
-AND log_action = 'delete'
-AND log_namespace = :namespace";
 	}
 
 }
