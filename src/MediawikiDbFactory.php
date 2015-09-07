@@ -5,6 +5,8 @@ namespace Mediawiki\Db;
 use Mediawiki\Db\Service\PageFileExtensionListGetter;
 use Mediawiki\Db\Service\DeletedLogListGetter;
 use Mediawiki\Db\Service\RedirectListGetter;
+use MediaWiki\Services\LogListGetter;
+use MediaWiki\Services\UserGetter;
 use PDO;
 
 class MediawikiDbFactory {
@@ -29,10 +31,10 @@ class MediawikiDbFactory {
 	/**
 	 * @since 0.1
 	 *
-	 * @return DeletedLogListGetter
+	 * @return LogListGetter
 	 */
-	public function newDeletedLogListGetter() {
-		return new DeletedLogListGetter( $this->db );
+	public function newLogListGetter() {
+		return new DatabaseLogListGetter( $this->db );
 	}
 
 	/**
@@ -42,6 +44,15 @@ class MediawikiDbFactory {
 	 */
 	public function newRedirectListGetter() {
 		return new RedirectListGetter( $this->db );
+	}
+
+	/**
+	 * @since 0.1
+	 *
+	 * @return UserGetter
+	 */
+	public function newUserGetter() {
+		return new DatabaseUserGetter( $this->db );
 	}
 
 }
