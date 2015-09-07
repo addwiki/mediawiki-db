@@ -30,6 +30,8 @@ class DatabaseUserGetter implements UserGetter {
 	 * @return User
 	 */
 	public function getUser( $userName ) {
+		$users = $this->getUsers( array( $userName ) );
+		return count( $users ) ? $user[0] : null;
 	}
 
 	/**
@@ -39,7 +41,7 @@ class DatabaseUserGetter implements UserGetter {
 	 */
 	public function getUsers( array $userNames ) {
 		$query = $this->db->from( 'user' )
-			->select( '' )
+			->select( 'user_id', 'user_name', 'user_editcount', 'user_registration', 'ug_group' )
 			->leftJoin( 'user_groups ON user_id = ug_user' )
 			->where( 'user_name', $userNames );
 
