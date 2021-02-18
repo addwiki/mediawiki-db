@@ -1,5 +1,5 @@
-# mediawiki-db
+# [ARCHIVED] mediawiki-db
 
-This is a work in progress!
+This was a work in progress package that was never really used.
 
-[![GitHub issue custom search in repo](https://img.shields.io/github/issues-search/addwiki/addwiki?label=issues&query=is%3Aissue%20is%3Aopen%20%5Bmediawiki-db%5D)](https://github.com/addwiki/addwiki/issues?q=is%3Aissue+is%3Aopen+%5Bmediawiki-db%5D+)
+Thus it has been archived.
